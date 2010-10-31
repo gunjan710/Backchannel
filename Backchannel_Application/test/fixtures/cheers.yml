@@ -1,0 +1,27 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one:             #pass
+  users_id: two
+  posts_id: one
+
+two:             #fail
+  users_id: one
+  posts_id: one
+
+cheerbyadmin:    #pass
+  users_id: admin
+  posts_id: one
+
+cheerbyabc1:     #pass
+  users_id: abc1
+  posts_id: one
+
+cheercommentbyabc1:     #pass
+  users_id: abc1
+  posts_id: nonadminpostcomment
+
+

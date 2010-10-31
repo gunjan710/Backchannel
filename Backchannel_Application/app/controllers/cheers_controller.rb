@@ -1,0 +1,2 @@
+class CheersController < ApplicationController
+end

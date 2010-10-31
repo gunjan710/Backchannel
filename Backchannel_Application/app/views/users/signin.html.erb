@@ -1,0 +1,28 @@
+<div id="footer" align="center">
+<br/><br/> &nbsp;&nbsp;
+<b><% if flash[:notice] %><%=h flash[:notice] %><% end %></b>
+  
+<%= error_messages_for :user %>
+<% form_for :user, @user, :url => { :action => "signin" } do |f| %>
+
+<table cellpadding=10px class="mytable">
+  <tr><td width=200 align="center"><p><b>USERNAME</b></p></td>
+      <td width=100 align="left"><p><%= f.text_field :username %></p></td><br/></tr>
+ <br/>
+  <tr><td align="center"><p><b>PASSWORD</b></p></td>
+      <td align="left"><p><%= f.password_field :password %></p></td><br/></tr>
+  <tr><td></td><td></td></tr>
+  <tr><td></td><td align="left"><p><%= f.submit "Sign In" %></p></td></tr>
+  <tr><td></td><td></td></tr>
+  <tr><td></td><td></td></tr>
+  <tr><td></td><td align="left"> New to Woofer?  <%= link_to 'Sign Up', new_user_path %></td></tr>
+</table>
+<% end %>
+</div>
+
+
+
+
+
+
+

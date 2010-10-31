@@ -1,0 +1,21 @@
+<div id="middle">  
+</div>
+
+<div id="footer" align = "center">
+  <br/><br/><hr/>
+<table class="mytable">
+  <tr> <td align = "center">
+  <p>
+  <b><%=h User.find(@post.users_id).username %></b>
+  <b> :   </b>
+  <b><%=h @post.content %></b>
+  </p>
+  </td></tr>
+  <tr><td align = "center">
+    <%  if session[:user_id]  %>
+            <%= link_to "back", :controller => "posts", :action => "index" %>   
+    <% end %>
+  </td></tr>
+</table>
+  <hr/>
+</div>

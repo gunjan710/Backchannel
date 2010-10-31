@@ -1,0 +1,34 @@
+<%= error_messages_for :user %>
+
+<div id="footer" align="center">
+<% if flash[:notice] %>
+  <%= h flash[:notice] %>
+  <% end %>
+
+<font size=16px color="black">
+    <table cellpadding=10px border="2" border="black"  width=80%>
+      <tr>
+        <th><b>USERNAME</b></th>
+        <th><b>NAME</b></th>
+        <th><b>POST CONTENT</b></th>
+        <th><b>CHEER COUNT</b></th>
+      </tr>
+      <tr>
+        <% @posts = Post.all(:order => "users_id DESC")%>
+        <% for post in @posts %>
+        <%@user = User.find(:first,:conditions => ["id = ?", post.users_id])%>
+        <%@numcheer = Cheer.find(:all,:conditions => ["posts_id = ?", post.id])%>
+        <td width=200> <%=h @user.username %></td>
+        <td width=200> <%=h @user.name %></td>
+        <td width=900> <%=h post.content %></td>
+        <td width=> <%=h @numcheer.size %></td>
+      </tr>
+  <%end %>
+</table>
+</font>
+    <p>
+        <%= link_to 'Back', posts_path %>
+    </p>
+</div>
+
+

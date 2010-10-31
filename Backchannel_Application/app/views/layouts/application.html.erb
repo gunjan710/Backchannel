@@ -1,0 +1,31 @@
+<head>
+  <%= javascript_include_tag :all %>
+  <b><%= stylesheet_link_tag 'layout' %></b>
+
+</head>
+
+<html>
+<head>
+<title> Woofer </title>
+<%= stylesheet_link_tag 'application' %>
+</head>
+
+
+<div id="header">
+  <br/><br/>
+  <table align="right">
+    <font color="#ffffff">
+      <% if session[:user_id] == nil %>
+        <tr><td><%= link_to "Sign In",:controller => "users", :action => "signin", :id => 1 %></td>
+                  <td width=50></td></tr><tr></tr>
+      <% end %>
+        <tr><td><%= link_to "Search User",:controller => "users", :action => "search", :id => 1 %></td>
+            <td width=50></td></tr><tr></tr>
+        <tr><td><%= link_to "Search Post",:controller => "posts", :action => "search", :id => 1 %></td>
+            <td width=50></td></tr>
+    </font>
+  </table>
+</div>
+<%= yield %>
+
+</html>

@@ -1,0 +1,43 @@
+<head>
+  <%= javascript_include_tag :all %>
+  <b><%= stylesheet_link_tag 'layout' %></b>
+</head>
+<body>
+
+<div id="footer" align="center">
+
+<table class="mytable">
+  <tr><td align="center">
+    <form action='/users/search/1' name='usersearchform'>
+    <p>
+        <b>Enter 'Username' to search</b><br/><br/>
+        <input type='text' name="username"/> <br/>
+    </p>
+    <p>
+        <input type='submit' value='Search'/>
+    </p>
+    </form>
+  </td></tr>
+  <tr><td align="center">
+    <hr width=50%>
+      <% if @user!=nil and session[:user_id]!=@user.id then %>
+        <b>Name: <%=h @user.name %></b><br/>
+        <b>Username: <%=h @user.username %></b><br/><br/>
+        <%= if(session[:admin] == true)
+                link_to 'Delete User', @user, :confirm => 'Are you sure?',  :method => :delete end%>
+        <% else %>
+        <b><% if flash[:notice] %><%=h flash[:notice] %><% end %></b>
+      <% end %>
+      <hr width=50%>
+  </td></tr>
+  <tr><td align="center">
+     <%  if session[:user_id]  %>
+            <%= link_to "back", :controller => "posts", :action => "index" %>
+     <%  else   %>
+             <%= link_to 'Back', :controller => "users", :action => "signin", :id => 1 %>
+     <% end %>
+     <br/><br/>
+  </td></tr>
+</table>
+</div>
+</body>

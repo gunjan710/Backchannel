@@ -1,0 +1,48 @@
+<div id="footer" align="center">
+
+<% if flash[:notice] %>
+  <%= h flash[:notice] %>
+  <% end %>
+
+<% form_for(@user) do |f| %>
+  <%= error_messages_for :user %>
+  <table cellpadding=10px class="mytable">
+    <tr>
+    <td><p><b>NAME</b></p></td>
+    <td><p><%= f.text_field :name %></p></td><br/>
+    </tr>
+    <tr>
+    <td><p><b>USERNAME</b></p></td>
+    <td><p><%= f.text_field :username %></p></td><br/>
+    </tr>
+    <tr>
+    <td><p><b>PASSWORD</b></p></td><br/>
+    <td><p><%= f.password_field :password %></p></td><br/>
+    </tr>
+    <tr>
+    <td><p><b>CONFIRM PASSWORD</b></p></td><br/>
+    <td><p><%= f.password_field :password_confirmation %></p></td><br/>
+    </tr>
+    <tr>
+    <td></td>
+    <td><p>
+        <%  if session[:admin] == false   %>
+        <%= f.submit "Sign Up"  %>   <br/>
+        <% else %>
+        <%= f.submit "Add Admin"  %> <br/><br/>
+        <% end %>
+    </p></td>
+    </tr>
+    <tr>
+    <td></td>
+    <td><p>
+        <%  if session[:admin] == false   %>
+        <%= link_to "Back",:controller => "users", :action => "signin", :id => 1 %>
+        <% else %>
+        <%= link_to 'Back', posts_path %>         
+        <% end %>        
+    </p></td>
+    </tr>
+  </table>
+<% end %>
+</div>

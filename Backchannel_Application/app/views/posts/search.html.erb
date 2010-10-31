@@ -1,0 +1,30 @@
+<head>
+  <%= javascript_include_tag :all %>
+  <b><%= stylesheet_link_tag 'layout' %></b>
+</head>
+<body>
+
+<div id="bar">
+</div>
+<br/><br/><br/>
+<div id="footer" align="center">
+  <table class="mytable">
+  <tr></tr><tr></tr>
+  <tr><td align="center">
+        <form action='/posts/index/1' name='postsearchform'><br/><br/>
+        <p><b>SEARCH POST</b><br/><br/><input type='text' name="content" size="100"/></p>
+        <p><input type='submit' value='Search'/></p>
+        </form>
+  </td></tr>
+  <tr></tr><tr></tr>
+  <tr><td align="center"><hr/><b><% if flash[:notice] %><%=h flash[:notice] %><% end %></b><hr/></td></tr>
+  <tr><td align="center">
+    <%  if session[:user_id]  %>
+            <%= link_to "Back", :controller => "posts", :action => "index" %>
+    <%  else   %>
+             <%= link_to 'Back', :controller => "users", :action => "signin", :id => 1 %>
+    <% end %>
+  </td></tr>
+</table>
+ </div>
+</body>

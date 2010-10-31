@@ -1,0 +1,81 @@
+<head>
+  <%= javascript_include_tag :all %>
+  <b><%= stylesheet_link_tag 'layout' %></b>
+</head>
+
+<div id="bar">
+<% if session[:user_id] %>
+    <h>Welcome, <%= session[:username] %> </h>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <%= link_to "| Home |", :controller => "posts", :action => "index" %>
+    <%= if(session[:admin] == true)
+        link_to "Add Admin |",:controller => "users", :action => "new", :id => session[:user_id] end %>
+    <%= if(session[:admin] == true)
+        link_to "Report |",:controller => "posts", :action => "report", :id => session[:user_id]end %>
+    <%= link_to "Logout |",:controller => "users", :action => "logout", :id => session[:user_id] %>
+<% end %>      
+</div>
+
+<div id="footer">
+<% if session[:user_id] and params[:content] == nil %>
+<% @post = Post.new %>
+<br/><br/> &nbsp;&nbsp;&nbsp;
+<b><% if flash[:notice] %><%=h flash[:notice] %><% end %></b>      
+
+<% form_for(@post) do |p| %>
+  <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;What's in your mind?<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;<%= p.text_area(:content, :rows=>2, :cols=>75, :class=>"input_text") %>
+    &nbsp; <%= p.submit "Post" %>
+  </p>
+<% end %><% end %>
+  
+<br/><br/>
+<table>
+<% @post = Post.new %>
+<% for post in @posts %>
+  <% user = User.find(post.users_id) %>
+
+<% @checkadmin = User.find(post.users_id)%>
+
+<%= @numcheer = Cheer.new
+    @numcheer = Cheer.find(:all,:conditions => ["posts_id = ?", post.id]) %>
+  <tr><td></td><td><hr/></td><td><hr/></td></tr>
+  <tr class="mytable">
+    <td WIDTH=100 style="background:#ffffff no-repeat;"></td>
+    <% if (User.find(post.users_id).admin == true) then %>
+    <td width=900 bgcolor="#cccccc"><b><%=h user.username %>:</b><br/><br/><font color="black"><%=h post.content %></font></td>
+    <% else %>
+    <td width=900><b><%=h user.username %>:</b><br/><br/><%=h post.content %></td>
+    <% end %>
+    <td width=25 align="center"><b><%=h @numcheer.size %></b></td>
+  </tr>
+<% if session[:user_id] %>
+  <tr>
+    <%= @cheer = Cheer.new
+        @cheer = Cheer.find(:first,:conditions => ["users_id = ? and posts_id = ?",session[:user_id], post.id]) %>    
+    <td WIDTH=100 style="background:#ffffff no-repeat;"></td>
+    <td align="right">
+    <font size="2px">
+    <%= if(post.users_id != session[:user_id] and @cheer==nil)
+        link_to "Cheer", :controller => "posts", :action => "cheerup", :id => post.id
+        elsif(post.users_id != session[:user_id] and @cheer!=nil)
+        link_to 'UnCheer', :controller => "posts", :action => "cheerdown", :id => post.id end%>
+        &nbsp;&nbsp;
+    <% @comment = Comment.new
+        @comment = Comment.find(:first,:conditions => ["reply = ?", post.id]) %>
+    <%= if(@comment==nil)
+        link_to 'Reply', :controller => "posts", :action => "reply", :id => post.id
+        elsif(@comment!=nil)
+        link_to 'Original', :controller => "posts", :action => "show", :id => @comment.original_post end%>
+        &nbsp;&nbsp;
+    <% end %>
+    <%= if(session[:admin] == true)
+        link_to 'Delete', post, :confirm => 'Are you sure?', :method => :delete end%>
+        &nbsp;&nbsp;
+  </font>
+    </td>
+  </tr>
+  <tr></tr><tr></tr><tr></tr>
+<% end %>
+</table>
+</div>
